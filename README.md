@@ -51,6 +51,13 @@ mkdir -p /mnt/etc/nixos
 git clone https://github.com/martinclaus1/nix-config.git /mnt/etc/nixos
 ```
 
+Avoid host key warnings:
+
+```bash
+sudo mkdir -p /mnt/etc/secrets/initrd
+sudo ssh-keygen -t rsa -b 4096 -f /mnt/etc/secrets/initrd/ssh_host_rsa_key -N ""
+```
+
 Install the system
 
 ```bash
@@ -74,14 +81,7 @@ Reboot
 reboot
 ```
 
-## initrd setup
-
-Avoid host key warnings:
-
-```bash
-sudo mkdir -p /etc/secrets/initrd
-sudo ssh-keygen -t rsa -b 4096 -f /etc/secrets/initrd/ssh_host_rsa_key -N ""
-```
+## Snippets
 
 Find actual network driver:
 

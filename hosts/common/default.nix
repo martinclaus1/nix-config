@@ -36,6 +36,8 @@
       wget
       rsync
       neovim
+      vim
+      just
     ];
   };
 }
