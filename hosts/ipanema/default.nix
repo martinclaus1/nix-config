@@ -42,23 +42,23 @@
   
   
   users = {
-      lazycat = {
-        shell = pkgs.zsh;
-        uid = 1000;
-        isNormalUser = true;
-        extraGroups = [ "wheel" ];
-        group = "lazycat";
-        openssh.authorizedKeys.keys = config.sshKeys;  # Use the imported key
-      };
+    lazycat = {
+      shell = pkgs.zsh;
+      uid = 1000;
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+      group = "lazycat";
+      openssh.authorizedKeys.keys = config.sshKeys;  # Use the imported key
     };
-    groups = {
-      lazycat = { 
-        gid = 1000;
-      };
-    };
-
-    programs.zsh.enable = true;
   };
+  
+  groups = {
+    lazycat = { 
+      gid = 1000;
+    };
+  };
+
+  programs.zsh.enable = true;
     
   # Disable root login
   users.users.root.openssh.authorizedKeys.keys = [ ];
