@@ -39,7 +39,7 @@
   networking.firewall.allowedTCPPorts = [ 22 ];  # SSH only by default
   
   
-  users = {
+  users.users = {
     lazycat = {
       shell = pkgs.zsh;
       uid = 1000;
@@ -50,7 +50,7 @@
     };
   };
   
-  groups = {
+  users.groups = {
     lazycat = { 
       gid = 1000;
     };
