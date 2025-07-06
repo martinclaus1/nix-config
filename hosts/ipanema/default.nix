@@ -61,8 +61,7 @@
   # Disable root login
   users.users.root.openssh.authorizedKeys.keys = [ ];
   
-  # System packages for ipanema
-  environment.systemPackages = config.commonPackages pkgs;
+  # System packages for ipanema are defined in common/default.nix
   
   # SSH configuration
   services.openssh = {
