@@ -27,6 +27,7 @@
   };
   
   # Enable networkd in initrd for network setup
+  boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
   boot.initrd.availableKernelModules = [ "e1000e" ];
   
