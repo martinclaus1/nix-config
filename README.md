@@ -12,3 +12,10 @@ Find actual network driver:
 ```bash
 lspci -v | grep -i ethernet -A 5
 ```
+
+# Set luks UUID
+
+Look for the FSTYPE cryto_luks
+```bash
+lsblk -f
+```

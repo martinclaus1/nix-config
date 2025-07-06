@@ -8,7 +8,7 @@
   
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/YOUR-LUKS-UUID";
+  boot.initrd.luks.devices."crypted".device = "/dev/disk/by-uuid/a430908a-a641-4fbf-8cec-e2792b945418";
   
   # Remote LUKS unlocking via SSH
   boot.initrd.network = {
