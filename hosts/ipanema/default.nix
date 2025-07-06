@@ -72,14 +72,15 @@
   # Automatic updates for security
   system.autoUpgrade = {
     enable = true;
-    flake = inputs.self.outPath;
+    flake = "/etc/nixos\\?submodules=1";
     flags = [
       "--update-input"
       "nixpkgs"
-      "-L" # print build logs
+      "-L"
     ];
-    dates = "02:00";
+    dates = "Sat *-*-* 06:00:00";
     randomizedDelaySec = "45min";
+    allowReboot = true;
   };
   
   # Garbage collection
