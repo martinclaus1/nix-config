@@ -95,4 +95,8 @@
   };
   
   system.stateVersion = "24.05";
+
+  powerManagement = {
+    powertop.enable = true;
+  };
 }
