@@ -99,4 +99,8 @@
   powerManagement = {
     powertop.enable = true;
   };
+
+  services.auto-aspm = {
+    enable = true;
+  };
 }
