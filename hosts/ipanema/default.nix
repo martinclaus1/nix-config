@@ -101,6 +101,6 @@
   };
 
   services.auto-aspm = {
-    enable = true;
+    enable = false;
   };
 }
