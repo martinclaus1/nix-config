@@ -1,8 +1,6 @@
 { config, pkgs, inputs, ... }: {
   imports = [
-    ./hardware.nix
     ./disko.nix
-    ../../modules/system/common.nix
     ../common
   ];
 
