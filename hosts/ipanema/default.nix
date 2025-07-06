@@ -19,11 +19,6 @@
       authorizedKeys = config.sshKeys;
       hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" ];
     };
-
-    # Configure network interface for initrd
-    postCommands = ''
-      echo 'cryptsetup-askpass' >> /root/.profile
-    '';
   };
   
   # Enable networkd in initrd for network setup
