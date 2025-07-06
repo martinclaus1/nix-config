@@ -13,20 +13,20 @@
     };
   };
 
-  nix.settings.experimental-features = lib.mkDefault [
-    "nix-command"
-    "flakes"
-  ];
-
-  security = {
-    doas.enable = lib.mkDefault false;
-    sudo = {
-      enable = lib.mkDefault true;
-      wheelNeedsPassword = lib.mkDefault false;
-    };
-  };
-
   config = {
+    nix.settings.experimental-features = lib.mkDefault [
+      "nix-command"
+      "flakes"
+    ];
+
+    security = {
+      doas.enable = lib.mkDefault false;
+      sudo = {
+        enable = lib.mkDefault true;
+        wheelNeedsPassword = lib.mkDefault false;
+      };
+    };
+
     # Define common packages as a system-wide variable
     environment.systemPackages = with pkgs; [
       htop
