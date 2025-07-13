@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/nvme0n1";  # Change to your disk
+        device = "/dev/nvme0n1"; # Change to your disk
         content = {
           type = "gpt";
           partitions = {
@@ -22,9 +22,7 @@
                 type = "luks";
                 name = "crypted";
                 # passwordFile = "/tmp/secret.key";  # Optional: use keyfile
-                settings = {
-                  allowDiscards = true;
-                };
+                settings = { allowDiscards = true; };
                 content = {
                   type = "lvm_pv";
                   vg = "pool";
@@ -43,7 +41,7 @@
             size = "4G";
             content = {
               type = "swap";
-              resumeDevice = true;  # Enable hibernation
+              resumeDevice = true; # Enable hibernation
             };
           };
           root = {

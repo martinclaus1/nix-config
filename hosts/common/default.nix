@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 
 {
   options = {
@@ -14,10 +14,8 @@
   };
 
   config = {
-    nix.settings.experimental-features = lib.mkDefault [
-      "nix-command"
-      "flakes"
-    ];
+    nix.settings.experimental-features =
+      lib.mkDefault [ "nix-command" "flakes" ];
 
     security = {
       doas.enable = lib.mkDefault false;
@@ -38,6 +36,7 @@
       neovim
       vim
       just
+      inputs.agenix.packages."${system}".default
     ];
   };
 }
