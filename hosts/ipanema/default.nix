@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, ... }: {
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
   imports = [
     ./disko.nix
     ../common
@@ -6,10 +12,10 @@
   ];
 
   networking.hostName = "ipanema";
-  
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  
+
   # Remote LUKS unlocking via SSH
   boot.initrd.network = {
     enable = true;
@@ -20,21 +26,20 @@
       hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" ];
     };
   };
-  
+
   # Enable networkd in initrd for network setup
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
   boot.initrd.availableKernelModules = [ "e1000e" ];
-  
-  networking.networkmanager.enable = false;  # Use systemd-networkd for servers
+
+  networking.networkmanager.enable = false; # Use systemd-networkd for servers
   systemd.network.enable = true;
   networking.useDHCP = false;
-  networking.interfaces.eth0.useDHCP = true;  # Adjust interface name
-  
+  networking.interfaces.eth0.useDHCP = true; # Adjust interface name
+
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];  # SSH only by default
-  
-  
+  networking.firewall.allowedTCPPorts = [ 22 ]; # SSH only by default
+
   users.users = {
     lazycat = {
       shell = pkgs.zsh;
@@ -42,28 +47,28 @@
       isNormalUser = true;
       extraGroups = [ "wheel" ];
       group = "lazycat";
-      openssh.authorizedKeys.keys = config.sshKeys;  # Use the imported key
+      openssh.authorizedKeys.keys = config.sshKeys; # Use the imported key
     };
   };
-  
+
   users.groups = {
-    lazycat = { 
+    lazycat = {
       gid = 1000;
     };
   };
 
   programs.zsh.enable = true;
-    
+
   # Disable root login
   users.users.root.openssh.authorizedKeys.keys = [ ];
-  
+
   # Machine-specific packages for ipanema
   environment.systemPackages = with pkgs; [
     powertop
   ];
-  
+
   # System packages for ipanema are defined in common/default.nix
-  
+
   # SSH configuration
   services.openssh = {
     enable = true;
@@ -73,7 +78,7 @@
       KbdInteractiveAuthentication = false;
     };
   };
-  
+
   # Automatic updates for security
   system.autoUpgrade = {
     enable = true;
@@ -87,14 +92,14 @@
     randomizedDelaySec = "45min";
     allowReboot = true;
   };
-  
+
   # Garbage collection
   nix.gc = {
     automatic = true;
     dates = "weekly";
     options = "--delete-older-than 30d";
   };
-  
+
   system.stateVersion = "24.05";
 
   powerManagement = {
@@ -103,5 +108,12 @@
 
   services.auto-aspm = {
     enable = false;
+  };
+
+  homelab = {
+    enable = true;
+    services = {
+      enable = true;
+    };
   };
 }
