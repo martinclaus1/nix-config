@@ -11,6 +11,20 @@
       443
     ];
 
+    security.acme = {
+      acceptTerms = true;
+      defaults.email = "<your-email@example.com>";
+      certs.${config.homelab.baseDomain} = {
+        reloadServices = [ "caddy.service" ];
+        domain = "${config.homelab.baseDomain}";
+        extraDomainNames = [ "*.${config.homelab.baseDomain}" ];
+        dnsProvider = "ionos";
+        dnsPropagationCheck = true;
+        environmentFile = config.homelab.dnsCredentialsFile;
+        group = config.services.caddy.group;
+      };
+    };
+
   };
 
   imports = [

@@ -1,4 +1,9 @@
-{ inputs, config, lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options = {
@@ -14,8 +19,10 @@
   };
 
   config = {
-    nix.settings.experimental-features =
-      lib.mkDefault [ "nix-command" "flakes" ];
+    nix.settings.experimental-features = lib.mkDefault [
+      "nix-command"
+      "flakes"
+    ];
 
     security = {
       doas.enable = lib.mkDefault false;
@@ -39,4 +46,8 @@
       inputs.agenix.packages."${system}".default
     ];
   };
+
+  imports = [
+    ./secrets
+  ];
 }

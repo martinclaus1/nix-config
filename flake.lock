@@ -68,11 +68,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752113600,
-        "narHash": "sha256-7LYDxKxZgBQ8LZUuolAQ8UkIB+jb4A2UmiR+kzY9CLI=",
+        "lastModified": 1752541678,
+        "narHash": "sha256-dyhGzkld6jPqnT/UfGV2oqe7tYn7hppAqFvF3GZTyXY=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "79264292b7e3482e5702932949de9cbb69fedf6d",
+        "rev": "2bf3421f7fed5c84d9392b62dcb9d76ef09796a7",
         "type": "github"
       },
       "original": {
@@ -104,11 +104,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1751984180,
-        "narHash": "sha256-LwWRsENAZJKUdD3SpLluwDmdXY9F45ZEgCb0X+xgOL0=",
+        "lastModified": 1752480373,
+        "narHash": "sha256-JHQbm+OcGp32wAsXTE/FLYGNpb+4GLi5oTvCxwSoBOA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9807714d6944a957c2e036f84b0ff8caf9930bc0",
+        "rev": "62e0f05ede1da0d54515d4ea8ce9c733f12d9f08",
         "type": "github"
       },
       "original": {
@@ -147,11 +147,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1752427678,
-        "narHash": "sha256-8vwMwE2uxlMD9V/XINW+dYhptS0QXVN2nCl+A9YHBsA=",
+        "lastModified": 1752604423,
+        "narHash": "sha256-tO1AoFhiDtsFm/SxaPRpQAom+c3E2ZwqJxN5mWimUsc=",
         "ref": "refs/heads/main",
-        "rev": "16b8d95bba6a93acfb4fe139d435eda68586f299",
-        "revCount": 2,
+        "rev": "d47e069e9b1a27e174f3e6bdc03a39eb743f8178",
+        "revCount": 4,
         "type": "git",
         "url": "ssh://git@github.com/martinclaus1/nix-secrets.git"
       },
