@@ -24,17 +24,25 @@
     };
   };
 
-  outputs = { nixpkgs, disko, auto-aspm, ... }@inputs: {
-    nixosConfigurations.ipanema = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        disko.nixosModules.disko
-        ./hosts/ipanema
-        ./modules/auto-aspm
-        ./homelab
-        inputs.agenix.nixosModules.default
-      ];
+  outputs =
+    {
+      nixpkgs,
+      disko,
+      auto-aspm,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations.ipanema = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          disko.nixosModules.disko
+          ./hosts/ipanema
+          ./modules/auto-aspm
+          ./homelab
+          ./users/lazycat
+          inputs.agenix.nixosModules.default
+        ];
+      };
     };
-  };
 }

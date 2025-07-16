@@ -26,6 +26,7 @@ in
   config = lib.mkIf cfg.enable {
     services.${service} = {
       enable = true;
+      environmentFile = builtins.toFile "homepage.env" "HOMEPAGE_ALLOWED_HOSTS=${homelab.baseDomain}";
     };
     services.caddy.virtualHosts."${homelab.baseDomain}" = {
       useACMEHost = homelab.baseDomain;

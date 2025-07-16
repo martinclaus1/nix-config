@@ -1,5 +1,4 @@
 {
-  lib,
   config,
   pkgs,
   ...
@@ -27,47 +26,22 @@
     };
   };
 
-  # Enable networkd in initrd for network setup
   boot.initrd.systemd.enable = true;
   boot.initrd.systemd.network.enable = true;
   boot.initrd.availableKernelModules = [ "e1000e" ];
 
-  networking.networkmanager.enable = false; # Use systemd-networkd for servers
+  networking.networkmanager.enable = false;
   systemd.network.enable = true;
   networking.useDHCP = false;
-  networking.interfaces.eth0.useDHCP = true; # Adjust interface name
+  networking.interfaces.eth0.useDHCP = true;
+  systemd.network.wait-online.enable = false;
 
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ]; # SSH only by default
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
-  users.users = {
-    lazycat = {
-      shell = pkgs.zsh;
-      uid = 1000;
-      isNormalUser = true;
-      extraGroups = [ "wheel" ];
-      group = "lazycat";
-      openssh.authorizedKeys.keys = config.sshKeys; # Use the imported key
-    };
-  };
-
-  users.groups = {
-    lazycat = {
-      gid = 1000;
-    };
-  };
-
-  programs.zsh.enable = true;
-
-  # Disable root login
-  users.users.root.openssh.authorizedKeys.keys = [ ];
-
-  # Machine-specific packages for ipanema
   environment.systemPackages = with pkgs; [
     powertop
   ];
-
-  # System packages for ipanema are defined in common/default.nix
 
   # SSH configuration
   services.openssh = {
@@ -90,7 +64,7 @@
     ];
     dates = "Sat *-*-* 06:00:00";
     randomizedDelaySec = "45min";
-    allowReboot = true;
+    allowReboot = false;
   };
 
   # Garbage collection
@@ -100,7 +74,7 @@
     options = "--delete-older-than 30d";
   };
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.05";
 
   powerManagement = {
     powertop.enable = true;
@@ -108,17 +82,5 @@
 
   services.auto-aspm = {
     enable = false;
-  };
-
-  homelab = {
-    enable = true;
-    dnsCredentialsFile = config.age.secrets.dnsApiCredentials.path;
-    baseDomain = "aperol.martinclaus.dev";
-    services = {
-      enable = true;
-      homepage = {
-        enable = true;
-      };
-    };
   };
 }
