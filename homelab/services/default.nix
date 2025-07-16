@@ -24,6 +24,9 @@
         group = config.services.caddy.group;
       };
     };
+    services.caddy = {
+      enable = true;
+    };
 
   };
 

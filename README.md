@@ -89,6 +89,12 @@ Find actual network driver:
 lspci -v | grep -i ethernet -A 5
 ```
 
+Debug acme challenge:
+
+```bash
+journalctl -u 'acme-*'
+```
+
 ## startup
 
 systemctl start cryptsetup.target
