@@ -13,7 +13,7 @@
 
     security.acme = {
       acceptTerms = true;
-      defaults.email = config.homelab.dnsContactEmail;
+      defaults.email = "post@martinclaus.dev";
       certs.${config.homelab.baseDomain} = {
         reloadServices = [ "caddy.service" ];
         domain = "${config.homelab.baseDomain}";

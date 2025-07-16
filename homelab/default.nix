@@ -26,10 +26,6 @@ in
     dnsCredentialsFile = lib.mkOption {
       type = lib.types.path;
     };
-
-    dnsContactEmail = lib.mkOption {
-      type = lib.types.str;
-    };
   };
 
   imports = [ ./services ];

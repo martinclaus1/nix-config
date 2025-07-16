@@ -113,18 +113,12 @@
   homelab = {
     enable = true;
     dnsCredentialsFile = config.age.secrets.dnsApiCredentials.path;
-    dnsContactEmail = lib.mkDefault (
-      if
-        (config.age.secrets ? dnsContactEmail)
-        && (builtins.pathExists config.age.secrets.dnsContactEmail.path)
-      then
-        builtins.readFile config.age.secrets.dnsContactEmail.path
-      else
-        "default@example.com"
-    );
     baseDomain = "aperol.martinclaus.dev";
     services = {
       enable = true;
+      homepage = {
+        enable = true;
+      };
     };
   };
 }
