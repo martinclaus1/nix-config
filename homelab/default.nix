@@ -26,6 +26,11 @@ in
     dnsCredentialsFile = lib.mkOption {
       type = lib.types.path;
     };
+
+    assetsUrl = lib.mkOption {
+      type = lib.types.str;
+      default = "https://assets.${cfg.baseDomain}";
+    };
   };
 
   imports = [ ./services ];

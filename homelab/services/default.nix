@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  inputs,
+  ...
+}:
 {
 
   options.homelab.services = {
@@ -13,7 +18,7 @@
 
     security.acme = {
       acceptTerms = true;
-      defaults.email = "post@martinclaus.dev";
+      defaults.email = "admin@martinclaus.dev";
       certs.${config.homelab.baseDomain} = {
         reloadServices = [ "caddy.service" ];
         domain = "${config.homelab.baseDomain}";
@@ -26,6 +31,23 @@
     };
     services.caddy = {
       enable = true;
+
+      virtualHosts."assets.${config.homelab.baseDomain}" = {
+        useACMEHost = config.homelab.baseDomain;
+        extraConfig = ''
+          root * ${inputs.self}/assets
+
+          # use "file_server browse" directive to enable directory browsing
+          file_server
+
+          encode gzip
+
+          @static {
+            path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot *.pdf *.zip
+          }
+          header @static Cache-Control "public, max-age=31536000"
+        '';
+      };
     };
 
   };
