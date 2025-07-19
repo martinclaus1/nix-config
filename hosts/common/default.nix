@@ -1,53 +1,31 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ inputs, lib, pkgs, ... }:
 
 {
-  options = {
-    sshKeys = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICzXbYP1RH7+Lqlx65uzIyLe7XtoIlfqE+C9rvP0tqNt"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICX6mqgg8gx2PIODrvKl5sOR+EW4mDM5w3zREn1vDYUW"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELaMlG7yEFF+959jfYlGQd2K2mpxVLX6sWHj/ITWOB+"
-      ];
-      description = "SSH keys for the system";
+  nix.settings.experimental-features = lib.mkDefault [ "nix-command" "flakes" ];
+
+  time.timeZone = "Europe/Berlin";
+
+  security = {
+    doas.enable = lib.mkDefault false;
+    sudo = {
+      enable = lib.mkDefault true;
+      wheelNeedsPassword = lib.mkDefault false;
     };
   };
 
-  config = {
-    nix.settings.experimental-features = lib.mkDefault [
-      "nix-command"
-      "flakes"
-    ];
-
-    security = {
-      doas.enable = lib.mkDefault false;
-      sudo = {
-        enable = lib.mkDefault true;
-        wheelNeedsPassword = lib.mkDefault false;
-      };
-    };
-
-    # Define common packages as a system-wide variable
-    environment.systemPackages = with pkgs; [
-      htop
-      tmux
-      git
-      curl
-      wget
-      rsync
-      neovim
-      vim
-      just
-      inputs.agenix.packages."${system}".default
-    ];
-  };
-
-  imports = [
-    ./secrets
+  # Define common packages as a system-wide variable
+  environment.systemPackages = with pkgs; [
+    htop
+    tmux
+    git
+    curl
+    wget
+    rsync
+    neovim
+    vim
+    just
+    inputs.agenix.packages."${system}".default
   ];
+
+  imports = [ ./secrets ];
 }

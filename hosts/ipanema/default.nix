@@ -1,14 +1,5 @@
-{
-  config,
-  pkgs,
-  ...
-}:
-{
-  imports = [
-    ./disko.nix
-    ../common
-    ./homelab
-  ];
+{ config, pkgs, ... }: {
+  imports = [ ./disko.nix ../common ./homelab ];
 
   networking.hostName = "ipanema";
 
@@ -21,7 +12,6 @@
     ssh = {
       enable = true;
       port = 2222;
-      authorizedKeys = config.sshKeys;
       hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" ];
     };
   };
@@ -39,9 +29,7 @@
   networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 22 ];
 
-  environment.systemPackages = with pkgs; [
-    powertop
-  ];
+  environment.systemPackages = with pkgs; [ powertop ];
 
   # SSH configuration
   services.openssh = {
@@ -57,11 +45,7 @@
   system.autoUpgrade = {
     enable = true;
     flake = "/etc/nixos\\?submodules=1";
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "-L"
-    ];
+    flags = [ "--update-input" "nixpkgs" "-L" ];
     dates = "Sat *-*-* 06:00:00";
     randomizedDelaySec = "45min";
     allowReboot = false;
@@ -76,11 +60,7 @@
 
   system.stateVersion = "25.05";
 
-  powerManagement = {
-    powertop.enable = true;
-  };
+  powerManagement = { powertop.enable = true; };
 
-  services.auto-aspm = {
-    enable = false;
-  };
+  services.auto-aspm = { enable = false; };
 }
