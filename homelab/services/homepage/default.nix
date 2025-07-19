@@ -29,6 +29,11 @@ in {
       default = null;
       description = "Custom CSS to be applied to the homepage dashboard";
     };
+    widgets = lib.mkOption {
+      type = lib.types.listOf lib.types.attrs;
+      default = [ ];
+      description = "Widgets to be displayed on the homepage dashboard";
+    };
   };
   config = lib.mkIf cfg.enable {
     services.${service} = {
@@ -50,15 +55,7 @@ in {
         favicon = "${homelab.assetsUrl}/icons/granita.png";
       };
       customCSS = if cfg.customCSS != null then cfg.customCSS else null;
-      widgets = [
-        { logo = { icon = "${homelab.assetsUrl}/icons/granita.png"; }; }
-        {
-          greeting = {
-            text_size = "4xl";
-            text = "${machineName} Homelab";
-          };
-        }
-      ];
+      widgets = cfg.widgets;
       services = [{
         "Misc" = [{
           "Home Assistant" = {

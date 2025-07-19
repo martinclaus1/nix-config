@@ -32,6 +32,15 @@
             color: #11171d !important;
           }
         '';
+        widgets = [
+          { logo = { icon = "${config.homelab.assetsUrl}/icons/granita.png"; }; }
+          {
+            greeting = {
+              text_size = "4xl";
+              text = "Ipanema Homelab";
+            };
+          }
+        ];
       };
     };
   };
