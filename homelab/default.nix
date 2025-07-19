@@ -1,8 +1,6 @@
 { lib, config, ... }:
-let
-  cfg = config.homelab;
-in
-{
+let cfg = config.homelab;
+in {
 
   options.homelab = {
     enable = lib.mkEnableOption "Homelab configuration";
@@ -23,13 +21,16 @@ in
       '';
     };
 
-    dnsCredentialsFile = lib.mkOption {
-      type = lib.types.path;
-    };
+    dnsCredentialsFile = lib.mkOption { type = lib.types.path; };
 
     assetsUrl = lib.mkOption {
       type = lib.types.str;
       default = "https://assets.${cfg.baseDomain}";
+    };
+
+    machineName = lib.mkOption {
+      type = lib.types.str;
+      default = "";
     };
   };
 

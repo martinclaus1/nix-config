@@ -1,20 +1,16 @@
-{
-  config,
-  lib,
-  inputs,
-  ...
-}:
-{
+{ config, lib, inputs, ... }: {
 
   options.homelab.services = {
     enable = lib.mkEnableOption "Settings and services for the homelab";
+    serveAssets = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Enable serving static assets via Caddy";
+    };
   };
 
   config = lib.mkIf config.homelab.services.enable {
-    networking.firewall.allowedTCPPorts = [
-      80
-      443
-    ];
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
 
     security.acme = {
       acceptTerms = true;
@@ -32,28 +28,27 @@
     services.caddy = {
       enable = true;
 
-      virtualHosts."assets.${config.homelab.baseDomain}" = {
-        useACMEHost = config.homelab.baseDomain;
-        extraConfig = ''
-          root * ${inputs.self}/assets
+      virtualHosts."assets.${config.homelab.baseDomain}" =
+        lib.mkIf config.homelab.services.serveAssets {
+          useACMEHost = config.homelab.baseDomain;
+          extraConfig = ''
+            root * ${inputs.self}/hosts/${config.homelab.machineName}/assets
 
-          # use "file_server browse" directive to enable directory browsing
-          file_server
+            # use "file_server browse" directive to enable directory browsing
+            file_server
 
-          encode gzip
+            encode gzip
 
-          @static {
-            path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot *.pdf *.zip
-          }
-          header @static Cache-Control "public, max-age=31536000"
-        '';
-      };
+            @static {
+              path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot *.pdf *.zip *.webp
+            }
+            header @static Cache-Control "public, max-age=31536000"
+          '';
+        };
     };
 
   };
 
-  imports = [
-    ./homepage
-  ];
+  imports = [ ./homepage ];
 
 }
