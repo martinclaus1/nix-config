@@ -95,6 +95,18 @@ Debug acme challenge:
 journalctl -u 'acme-*'
 ```
 
+Check network related boot logs:
+```bash
+sudo journalctl -b | grep -E "(network|ssh|initrd)"
+```
+
+Access console at boot with Crtl + Alt + F2
+
+Check network status
+```bash
+ip addr show
+```
+
 ## startup
 
 systemctl start cryptsetup.target

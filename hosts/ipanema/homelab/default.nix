@@ -9,8 +9,12 @@
       enable = true;
       serveAssets = true;
       adguardhome = {
-        enable = true;
+        enable = false;
         hashedPassword = config.age.secrets.adguardHomePassword.path;
+      };
+      adguardhome-sync = {
+        enable = false;
+        environmentFile = config.age.secrets.adguardHomeSyncEnvironment.path;
       };
       homepage = {
         enable = true;

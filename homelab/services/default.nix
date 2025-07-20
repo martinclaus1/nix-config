@@ -47,7 +47,13 @@
         };
     };
 
+    virtualisation.podman = {
+      dockerCompat = true;
+      autoPrune.enable = true;
+      defaultNetwork.settings = { dns_enabled = true; };
+    };
+    virtualisation.oci-containers = { backend = "podman"; };
   };
 
-  imports = [ ./homepage ./adguardhome ];
+  imports = [ ./homepage ./adguardhome ./adguardhome-sync ];
 }

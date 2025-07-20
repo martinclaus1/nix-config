@@ -14,7 +14,12 @@ in {
   config = lib.mkIf cfg.enable {
     services.adguardhome = {
       enable = true;
+      host = "10.55.66.22";
       settings = {
+        dns = { bind_hosts = [ "10.55.66.22" ]; };
+        http = {
+          address = "10.55.66.22:3000"; # Explicit web interface binding
+        };
         users = [{
           name = "lavendel";
           password = "placeholder";

@@ -1,33 +1,102 @@
 { config, pkgs, ... }: {
   imports = [ ./disko.nix ../common ./homelab ./secrets ];
 
-  networking.hostName = "ipanema";
-
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Remote LUKS unlocking via SSH
-  boot.initrd.network = {
-    enable = true;
-    ssh = {
+  boot.initrd = {
+    availableKernelModules = [ "e1000e" ];
+    systemd = {
       enable = true;
-      port = 2222;
-      hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" ];
+      network = {
+        enable = true;
+        networks = {
+          "10-all-eth" = {
+            matchConfig = { Name = "e*"; }; # Match eth0, enp0s3, etc.
+            networkConfig = {
+              Address = "10.55.66.21/24";
+              Gateway = "10.55.66.1";
+              DNS = [ "10.55.66.1" ];
+            };
+          };
+        };
+      };
+    };
+    network = {
+      enable = true;
+      flushBeforeStage2 = true;
+
+      ssh = {
+        enable = true;
+        port = 2222;
+        hostKeys = [ "/etc/secrets/initrd/ssh_host_rsa_key" ];
+      };
     };
   };
 
-  boot.initrd.systemd.enable = true;
-  boot.initrd.systemd.network.enable = true;
-  boot.initrd.availableKernelModules = [ "e1000e" ];
+  networking = {
+    hostName = "ipanema";
+    networkmanager.enable = false;
+    useDHCP = false;
+    #interfaces.eth0.useDHCP = true;
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [ 22 2222 ];
+      allowedUDPPorts = [ 53 ];
+      interfaces = {
+        "adguard0" = {
+          allowedTCPPorts = [ 53 3000 ];
+          allowedUDPPorts = [ 53 ];
+        };
+      };
+      extraCommands = ''
+        iptables -A FORWARD -i eth0 -o adguard0 -j ACCEPT
+        iptables -A FORWARD -i adguard0 -o eth0 -j ACCEPT
 
-  networking.networkmanager.enable = false;
-  systemd.network.enable = true;
-  networking.useDHCP = false;
-  networking.interfaces.eth0.useDHCP = true;
-  systemd.network.wait-online.enable = false;
+        iptables -t nat -A POSTROUTING -s 10.55.66.22/32 -o eth0 -j MASQUERADE
+        iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 3000 -j DNAT --to-destination 10.55.66.22:3000
+      '';
+    };
 
-  networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  };
+
+  systemd.network = {
+    enable = true;
+    wait-online.enable = false;
+
+    netdevs = {
+      "10-adguard-macvlan" = {
+        netdevConfig = {
+          Kind = "macvlan";
+          Name = "adguard0";
+        };
+        macvlanConfig = { Mode = "bridge"; };
+      };
+    };
+
+    networks = {
+      "20-eth0" = {
+        matchConfig.Name = "eth0";
+        networkConfig = {
+          Address = "10.55.66.21/24";
+          Gateway = "10.55.66.1";
+          MACVLAN = "adguard0";
+          DNS = [ "10.55.66.1" ];
+          IPv4Forwarding = true;
+          IPv6Forwarding = true;
+        };
+      };
+
+      "30-adguard0" = {
+        matchConfig.Name = "adguard0";
+        networkConfig = {
+          Address = "10.55.66.22/24";
+          Gateway = "10.55.66.1";
+        };
+        linkConfig = { RequiredForOnline = false; };
+      };
+    };
+  };
 
   environment.systemPackages = with pkgs; [ powertop ];
 
@@ -64,5 +133,13 @@
 
   services.auto-aspm = { enable = false; };
 
-  services.resolved.enable = false;
+  boot.kernel.sysctl = { "net.ipv4.ip_forward" = 1; };
+
+  services.resolved = {
+    enable = true;
+    extraConfig = ''
+      DNSStubListener=no
+    '';
+  };
+
 }
