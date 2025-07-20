@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  imports = [ ./disko.nix ../common ./homelab ];
+  imports = [ ./disko.nix ../common ./homelab ./secrets ];
 
   networking.hostName = "ipanema";
 
@@ -63,4 +63,6 @@
   powerManagement = { powertop.enable = true; };
 
   services.auto-aspm = { enable = false; };
+
+  services.resolved.enable = false;
 }

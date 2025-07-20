@@ -8,6 +8,10 @@
     services = {
       enable = true;
       serveAssets = true;
+      adguardhome = {
+        enable = true;
+        hashedPassword = config.age.secrets.adguardHomePassword.path;
+      };
       homepage = {
         enable = true;
         customCSS = ''
@@ -33,7 +37,9 @@
           }
         '';
         widgets = [
-          { logo = { icon = "${config.homelab.assetsUrl}/icons/granita.png"; }; }
+          {
+            logo = { icon = "${config.homelab.assetsUrl}/icons/granita.png"; };
+          }
           {
             greeting = {
               text_size = "4xl";
