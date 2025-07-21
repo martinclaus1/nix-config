@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   sshKeys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICzXbYP1RH7+Lqlx65uzIyLe7XtoIlfqE+C9rvP0tqNt"
@@ -6,7 +6,8 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIELaMlG7yEFF+959jfYlGQd2K2mpxVLX6sWHj/ITWOB+"
   ];
 
-in {
+in
+{
   nix.settings.trusted-users = [ "lazycat" ];
 
   boot.initrd.network.ssh.authorizedKeys = sshKeys;
@@ -20,10 +21,18 @@ in {
       group = "lazycat";
       openssh.authorizedKeys.keys = sshKeys;
     };
-    root = { openssh = { authorizedKeys.keys = [ ]; }; };
+    root = {
+      openssh = {
+        authorizedKeys.keys = [ ];
+      };
+    };
   };
 
-  users.groups = { lazycat = { gid = 1000; }; };
+  users.groups = {
+    lazycat = {
+      gid = 1000;
+    };
+  };
 
   programs.zsh.enable = true;
 }

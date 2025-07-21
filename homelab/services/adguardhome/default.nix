@@ -1,8 +1,9 @@
-{ config, lib, inputs, ... }:
+{ config, lib, ... }:
 let
   cfg = config.homelab.services.adguardhome;
   homelab = config.homelab;
-in {
+in
+{
   options.homelab.services.adguardhome = {
     enable = lib.mkEnableOption { description = "Enable AdGuard Home"; };
     hashedPassword = lib.mkOption {
@@ -16,14 +17,18 @@ in {
       enable = true;
       host = "10.55.66.22";
       settings = {
-        dns = { bind_hosts = [ "10.55.66.22" ]; };
+        dns = {
+          bind_hosts = [ "10.55.66.22" ];
+        };
         http = {
           address = "10.55.66.22:3000"; # Explicit web interface binding
         };
-        users = [{
-          name = "lavendel";
-          password = "placeholder";
-        }];
+        users = [
+          {
+            name = "lavendel";
+            password = "placeholder";
+          }
+        ];
       };
     };
 
@@ -43,9 +48,7 @@ in {
     services.caddy.virtualHosts."adguard.${homelab.baseDomain}" = {
       useACMEHost = homelab.baseDomain;
       extraConfig = ''
-        reverse_proxy http://${config.services.adguardhome.host}:${
-          toString config.services.adguardhome.port
-        }
+        reverse_proxy http://${config.services.adguardhome.host}:${toString config.services.adguardhome.port}
       '';
     };
   };

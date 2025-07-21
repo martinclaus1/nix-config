@@ -23,22 +23,6 @@
         "type": "github"
       }
     },
-    "auto-aspm": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1734075490,
-        "narHash": "sha256-rbvqaCddVTBpisc+Ow4IF0FfWJ4//lNsV3gY55w6AP0=",
-        "owner": "notthebee",
-        "repo": "AutoASPM",
-        "rev": "e3bbeb5a96a2fb24188a7e6be649e057ff1968c5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "notthebee",
-        "repo": "AutoASPM",
-        "type": "github"
-      }
-    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -68,11 +52,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752718651,
-        "narHash": "sha256-PkaR0qmyP9q/MDN3uYa+RLeBA0PjvEQiM0rTDDBXkL8=",
+        "lastModified": 1753100035,
+        "narHash": "sha256-cw+vVkef8EOjzJyr94wEKk34JDJu4lkGp2tkVUWaUxk=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "d5ad4485e6f2edcc06751df65c5e16572877db88",
+        "rev": "3db2f0476516b2758fe8f1559f70c937b9d9b16b",
         "type": "github"
       },
       "original": {
@@ -137,7 +121,6 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
-        "auto-aspm": "auto-aspm",
         "disko": "disko",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable",
@@ -147,11 +130,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1753013372,
-        "narHash": "sha256-j+O6WqOZjrTm4187MM/MP/MpBGVQNEmR6fkaqCP7KWM=",
+        "lastModified": 1753122529,
+        "narHash": "sha256-OB+nLl/j2PyMfqRD3zQErB2zXGDD9Am4n7LYYhCz+sc=",
         "ref": "refs/heads/main",
-        "rev": "e6583de6cf0a21a14751f009e727fb93f02e88d3",
-        "revCount": 9,
+        "rev": "18bdac4835523b44e572817aef2ded02c1bd50d3",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://git@github.com/martinclaus1/nix-secrets.git"
       },

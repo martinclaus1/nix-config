@@ -1,4 +1,5 @@
-{ config, ... }: {
+{ config, ... }:
+{
 
   homelab = {
     enable = true;
@@ -42,7 +43,9 @@
         '';
         widgets = [
           {
-            logo = { icon = "${config.homelab.assetsUrl}/icons/granita.png"; };
+            logo = {
+              icon = "${config.homelab.assetsUrl}/icons/granita.png";
+            };
           }
           {
             greeting = {

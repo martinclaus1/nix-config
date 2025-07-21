@@ -8,11 +8,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    auto-aspm = {
-      url = "github:notthebee/AutoASPM";
-      flake = false;
-    };
-
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,7 +23,6 @@
     {
       nixpkgs,
       disko,
-      auto-aspm,
       ...
     }@inputs:
     {
@@ -38,7 +32,6 @@
         modules = [
           disko.nixosModules.disko
           ./hosts/ipanema
-          ./modules/auto-aspm
           ./homelab
           ./users/lazycat
           inputs.agenix.nixosModules.default

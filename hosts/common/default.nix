@@ -1,7 +1,15 @@
-{ inputs, lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  nix.settings.experimental-features = lib.mkDefault [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = lib.mkDefault [
+    "nix-command"
+    "flakes"
+  ];
 
   time.timeZone = "Europe/Berlin";
 

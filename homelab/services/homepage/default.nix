@@ -1,28 +1,34 @@
-{ config, lib, inputs, ... }:
+{
+  config,
+  lib,
+  ...
+}:
 let
   service = "homepage-dashboard";
   cfg = config.homelab.services.homepage;
   homelab = config.homelab;
-  capitalizeFirst = str:
-    if str == "" then
-      ""
-    else
-      (lib.toUpper (lib.substring 0 1 str)) + (lib.substring 1 (-1) str);
+  capitalizeFirst =
+    str: if str == "" then "" else (lib.toUpper (lib.substring 0 1 str)) + (lib.substring 1 (-1) str);
 
   machineName = capitalizeFirst homelab.machineName;
-in {
+in
+{
   options.homelab.services.homepage = {
     enable = lib.mkEnableOption { description = "Enable ${service}"; };
     misc = lib.mkOption {
       default = [ ];
-      type = lib.types.listOf (lib.types.attrsOf (lib.types.submodule {
-        options = {
-          description = lib.mkOption { type = lib.types.str; };
-          href = lib.mkOption { type = lib.types.str; };
-          siteMonitor = lib.mkOption { type = lib.types.str; };
-          icon = lib.mkOption { type = lib.types.str; };
-        };
-      }));
+      type = lib.types.listOf (
+        lib.types.attrsOf (
+          lib.types.submodule {
+            options = {
+              description = lib.mkOption { type = lib.types.str; };
+              href = lib.mkOption { type = lib.types.str; };
+              siteMonitor = lib.mkOption { type = lib.types.str; };
+              icon = lib.mkOption { type = lib.types.str; };
+            };
+          }
+        )
+      );
     };
     customCSS = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
@@ -38,8 +44,7 @@ in {
   config = lib.mkIf cfg.enable {
     services.${service} = {
       enable = true;
-      environmentFile = builtins.toFile "homepage.env"
-        "HOMEPAGE_ALLOWED_HOSTS=${homelab.baseDomain}";
+      environmentFile = builtins.toFile "homepage.env" "HOMEPAGE_ALLOWED_HOSTS=${homelab.baseDomain}";
       settings = {
         title = "${machineName} Homelab";
         target = "_self";
@@ -56,21 +61,23 @@ in {
       };
       customCSS = if cfg.customCSS != null then cfg.customCSS else null;
       widgets = cfg.widgets;
-      services = [{
-        "Misc" = [{
-          "Home Assistant" = {
-            href = "https://ha.martinclaus.dev";
-            icon = "home-assistant.svg";
-          };
-        }];
-      }];
+      services = [
+        {
+          "Misc" = [
+            {
+              "Home Assistant" = {
+                href = "https://ha.martinclaus.dev";
+                icon = "home-assistant.svg";
+              };
+            }
+          ];
+        }
+      ];
     };
     services.caddy.virtualHosts."${homelab.baseDomain}" = {
       useACMEHost = homelab.baseDomain;
       extraConfig = ''
-        reverse_proxy http://127.0.0.1:${
-          toString config.services.${service}.listenPort
-        }
+        reverse_proxy http://127.0.0.1:${toString config.services.${service}.listenPort}
       '';
     };
   };

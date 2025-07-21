@@ -22,7 +22,9 @@
                 type = "luks";
                 name = "crypted";
                 # passwordFile = "/tmp/secret.key";  # Optional: use keyfile
-                settings = { allowDiscards = true; };
+                settings = {
+                  allowDiscards = true;
+                };
                 content = {
                   type = "lvm_pv";
                   vg = "pool";

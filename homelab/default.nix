@@ -1,6 +1,8 @@
 { lib, config, ... }:
-let cfg = config.homelab;
-in {
+let
+  cfg = config.homelab;
+in
+{
 
   options.homelab = {
     enable = lib.mkEnableOption "Homelab configuration";
