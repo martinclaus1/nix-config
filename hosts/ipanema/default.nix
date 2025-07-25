@@ -56,12 +56,13 @@ in
     firewall = {
       enable = true;
       checkReversePath = false;
-      allowedTCPPorts = [
-        22
-        2222
-      ];
-      allowedUDPPorts = [ 53 ];
       interfaces = {
+        "${interface}" = {
+          allowedTCPPorts = [
+            22
+            2222
+          ];
+        };
         "adguard0" = {
           allowedTCPPorts = [ 53 ];
           allowedUDPPorts = [ 53 ];

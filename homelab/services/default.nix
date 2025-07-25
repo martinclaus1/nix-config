@@ -13,10 +13,15 @@
       default = false;
       description = "Enable serving static assets via Caddy";
     };
+    defaultInterface = lib.mkOption {
+      type = lib.types.str;
+      default = "eth0";
+      description = "Default network interface for the homelab services";
+    };
   };
 
   config = lib.mkIf config.homelab.services.enable {
-    networking.firewall.allowedTCPPorts = [
+    networking.firewall.interfaces."${config.homelab.services.defaultInterface}".allowedTCPPorts = [
       80
       443
     ];
