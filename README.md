@@ -96,6 +96,7 @@ journalctl -u 'acme-*'
 ```
 
 Check network related boot logs:
+
 ```bash
 sudo journalctl -b | grep -E "(network|ssh|initrd)"
 ```
@@ -103,8 +104,21 @@ sudo journalctl -b | grep -E "(network|ssh|initrd)"
 Access console at boot with Crtl + Alt + F2
 
 Check network status
+
 ```bash
 ip addr show
+```
+
+Print multiple files
+
+```bash
+tail -n +1 /path/to/files/*.txt
+```
+
+Keep the last 5 generations of the system
+
+```bash
+sudo nix-env --delete-generations +5 --profile /nix/var/nix/profiles/system
 ```
 
 ## startup

@@ -10,7 +10,7 @@
       enable = true;
       serveAssets = true;
       adguardhome = {
-        enable = false;
+        enable = true;
         hashedPassword = config.age.secrets.adguardHomePassword.path;
       };
       adguardhome-sync = {
