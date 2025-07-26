@@ -121,6 +121,12 @@ Keep the last 5 generations of the system
 sudo nix-env --delete-generations +5 --profile /nix/var/nix/profiles/system
 ```
 
+Check podman logs
+
+```bash
+journalctl -fu podman-adguardhome-sync.service --since yesterday
+```
+
 ## startup
 
 systemctl start cryptsetup.target

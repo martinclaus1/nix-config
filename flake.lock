@@ -88,11 +88,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1752950548,
-        "narHash": "sha256-NS6BLD0lxOrnCiEOcvQCDVPXafX1/ek1dfJHX1nUIzc=",
+        "lastModified": 1753429684,
+        "narHash": "sha256-9h7+4/53cSfQ/uA3pSvCaBepmZaz/dLlLVJnbQ+SJjk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c87b95e25065c028d31a94f06a62927d18763fdf",
+        "rev": "7fd36ee82c0275fb545775cc5e4d30542899511d",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1753122529,
-        "narHash": "sha256-OB+nLl/j2PyMfqRD3zQErB2zXGDD9Am4n7LYYhCz+sc=",
+        "lastModified": 1753538343,
+        "narHash": "sha256-c1D6iSZ4FK35aZh+kx4qt9lYX8iyxpYBc8c6eHWT6D0=",
         "ref": "refs/heads/main",
-        "rev": "18bdac4835523b44e572817aef2ded02c1bd50d3",
-        "revCount": 10,
+        "rev": "1b284f0a36007821fd9ebb94d780b727a6c14ea6",
+        "revCount": 15,
         "type": "git",
         "url": "ssh://git@github.com/martinclaus1/nix-secrets.git"
       },

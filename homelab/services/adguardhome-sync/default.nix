@@ -23,6 +23,9 @@ in
         environment = {
           TZ = homelab.timeZone;
         };
+        extraOptions = [
+          "--add-host=host.docker.internal:host-gateway"
+        ];
       };
     };
   };

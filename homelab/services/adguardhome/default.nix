@@ -6,6 +6,11 @@ in
 {
   options.homelab.services.adguardhome = {
     enable = lib.mkEnableOption { description = "Enable AdGuard Home"; };
+    dnsBindHost = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "The host to bind the AdGuard Home DNS service to";
+    };
     hashedPassword = lib.mkOption {
       type = lib.types.str;
       default = "";
@@ -15,10 +20,9 @@ in
   config = lib.mkIf cfg.enable {
     services.adguardhome = {
       enable = true;
-      host = "10.55.66.22";
       settings = {
         dns = {
-          bind_hosts = [ "10.55.66.22" ];
+          bind_hosts = [ cfg.dnsBindHost ];
         };
         users = [
           {

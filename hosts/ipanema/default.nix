@@ -56,6 +56,7 @@ in
     firewall = {
       enable = true;
       checkReversePath = false;
+      trustedInterfaces = [ "podman0" ];
       interfaces = {
         "${interface}" = {
           allowedTCPPorts = [
