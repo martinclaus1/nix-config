@@ -61,18 +61,44 @@ in
       };
       customCSS = if cfg.customCSS != null then cfg.customCSS else null;
       widgets = cfg.widgets;
-      services = [
-        {
-          "Misc" = [
-            {
-              "Home Assistant" = {
-                href = "https://ha.martinclaus.dev";
-                icon = "home-assistant.svg";
-              };
-            }
+      services =
+        let
+          homepageCategories = [
+            "Services"
           ];
-        }
-      ];
+          hl = config.homelab.services;
+          homepageServices =
+            x:
+            (lib.attrsets.filterAttrs (
+              name: value: value ? homepage && value.homepage.category == x
+            ) homelab.services);
+        in
+        lib.lists.forEach homepageCategories (cat: {
+          "${cat}" =
+            lib.lists.forEach (lib.attrsets.mapAttrsToList (name: value: name) (homepageServices "${cat}"))
+              (x: {
+                "${hl.${x}.homepage.name}" = {
+                  icon = hl.${x}.homepage.icon;
+                  description = hl.${x}.homepage.description;
+                  href = "https://${hl.${x}.url}";
+                  siteMonitor = "https://${hl.${x}.url}";
+                };
+              });
+        })
+        ++ [
+          {
+            "Misc" = [
+              {
+                "Home Assistant" = {
+                  href = "https://ha.martinclaus.dev";
+                  icon = "home-assistant.svg";
+                  description = "Home Assistant is an open-source home automation platform that focuses on privacy and local control.";
+                  siteMonitor = "https://ha.martinclaus.dev";
+                };
+              }
+            ];
+          }
+        ];
     };
     services.caddy.virtualHosts."${homelab.baseDomain}" = {
       useACMEHost = homelab.baseDomain;

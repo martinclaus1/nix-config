@@ -16,6 +16,26 @@ in
       default = "";
       description = "The hashed password for the AdGuard Home user";
     };
+    url = lib.mkOption {
+      type = lib.types.str;
+      default = "adguard.${homelab.baseDomain}";
+    };
+    homepage.name = lib.mkOption {
+      type = lib.types.str;
+      default = "AdGuard Home";
+    };
+    homepage.description = lib.mkOption {
+      type = lib.types.str;
+      default = "AdGuard Home is a network-wide ad blocker that can be used to block ads, trackers, and other unwanted content on your network.";
+    };
+    homepage.icon = lib.mkOption {
+      type = lib.types.str;
+      default = "adguard-home.svg";
+    };
+    homepage.category = lib.mkOption {
+      type = lib.types.str;
+      default = "Services";
+    };
   };
   config = lib.mkIf cfg.enable {
     services.adguardhome = {
@@ -46,7 +66,7 @@ in
       '';
     };
 
-    services.caddy.virtualHosts."adguard.${homelab.baseDomain}" = {
+    services.caddy.virtualHosts."${cfg.url}" = {
       useACMEHost = homelab.baseDomain;
       extraConfig = ''
         reverse_proxy http://${config.services.adguardhome.host}:${toString config.services.adguardhome.port}
