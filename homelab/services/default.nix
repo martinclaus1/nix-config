@@ -76,5 +76,6 @@
     ./homepage
     ./adguardhome
     ./adguardhome-sync
+    ./calibre-web
   ];
 }

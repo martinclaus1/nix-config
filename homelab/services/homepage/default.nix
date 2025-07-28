@@ -65,6 +65,7 @@ in
         let
           homepageCategories = [
             "Services"
+            "Content"
           ];
           hl = config.homelab.services;
           homepageServices =

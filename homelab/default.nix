@@ -34,6 +34,21 @@ in
       type = lib.types.str;
       default = "";
     };
+
+    user = lib.mkOption {
+      default = "share";
+      type = lib.types.str;
+      description = ''
+        User to run the homelab services as
+      '';
+    };
+    group = lib.mkOption {
+      default = "share";
+      type = lib.types.str;
+      description = ''
+        Group to run the homelab services as
+      '';
+    };
   };
 
   imports = [ ./services ];
