@@ -10,11 +10,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1750173260,
-        "narHash": "sha256-9P1FziAwl5+3edkfFcr5HeGtQUtrSdk/MksX39GieoA=",
+        "lastModified": 1754433428,
+        "narHash": "sha256-NA/FT2hVhKDftbHSwVnoRTFhes62+7dxZbxj5Gxvghs=",
         "owner": "ryantm",
         "repo": "agenix",
-        "rev": "531beac616433bac6f9e2a19feb8e99a22a66baf",
+        "rev": "9edb1787864c4f59ae5074ad498b6272b3ec308d",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1753538343,
-        "narHash": "sha256-c1D6iSZ4FK35aZh+kx4qt9lYX8iyxpYBc8c6eHWT6D0=",
+        "lastModified": 1754827898,
+        "narHash": "sha256-NNEqv1/hALOT50p9zPOhbaCnOkCVw8YXD3D40WRiN/E=",
         "ref": "refs/heads/main",
-        "rev": "1b284f0a36007821fd9ebb94d780b727a6c14ea6",
-        "revCount": 15,
+        "rev": "0d26d5644e598a45c51ff36c0cbd603214d5339a",
+        "revCount": 16,
         "type": "git",
         "url": "ssh://git@github.com/martinclaus1/nix-secrets.git"
       },

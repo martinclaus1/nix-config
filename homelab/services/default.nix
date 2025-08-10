@@ -77,5 +77,6 @@
     ./adguardhome
     ./adguardhome-sync
     ./calibre-web
+    ./tandoor
   ];
 }
