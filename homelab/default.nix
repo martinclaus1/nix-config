@@ -53,5 +53,17 @@ in
 
   imports = [ ./services ];
 
-  config = lib.mkIf cfg.enable { };
+  config = lib.mkIf cfg.enable {
+    users = {
+      groups.${cfg.group} = {
+        gid = 993;
+      };
+      users.${cfg.user} = {
+        uid = 994;
+        home = "/home/${cfg.user}";
+        isSystemUser = true;
+        group = cfg.group;
+      };
+    };
+  };
 }

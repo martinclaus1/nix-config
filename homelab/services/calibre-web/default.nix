@@ -15,7 +15,6 @@ in
 
     libraryDir = lib.mkOption {
       type = lib.types.str;
-      default = "/mnt/user/books";
       description = "Directory where the Calibre library is stored";
     };
 
@@ -51,7 +50,11 @@ in
       user = homelab.user;
       group = homelab.group;
       dataDir = cfg.configDir;
+      listen = {
+        ip = "127.0.0.1";
+      };
       options = {
+        enableBookUploading = true;
         calibreLibrary = cfg.libraryDir;
       };
     };

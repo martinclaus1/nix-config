@@ -56,6 +56,10 @@
           }
         ];
       };
+      calibre-web = {
+        enable = true;
+        libraryDir = "/home/share/books";
+      };
     };
   };
 }
