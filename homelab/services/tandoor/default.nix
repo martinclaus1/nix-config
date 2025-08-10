@@ -74,14 +74,21 @@ in {
       port = cfg.port;
       database.createLocally = false;
       extraConfig = {
-        SECRET_KEY_FILE = cfg.secretKeyFile;
         TZ = homelab.timeZone;
         DB_ENGINE = "django.db.backends.postgresql";
         POSTGRES_HOST = "/run/postgresql";
         POSTGRES_DB = "tandoor_recipes";
         POSTGRES_USER = "tandoor_recipes";
         ALLOWED_HOSTS = cfg.url;
+        GUNICORN_MEDIA = 1;
+        GUNICORN_THREADS = 1;
+        GUNICORN_WORKERS = 1;
+        COMMENT_PREF_DEFAULT = 1;
       };
+    };
+
+    systemd.services.tandoor-recipes = {
+      serviceConfig = { EnvironmentFile = cfg.secretKeyFile; };
     };
 
     # Caddy reverse proxy configuration
