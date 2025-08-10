@@ -31,20 +31,6 @@ in {
       description = "Path to file containing the Django secret key";
     };
 
-    database = {
-      name = lib.mkOption {
-        type = lib.types.str;
-        default = "tandoor";
-        description = "Database name";
-      };
-
-      user = lib.mkOption {
-        type = lib.types.str;
-        default = "tandoor";
-        description = "Database user";
-      };
-    };
-
     homepage.name = lib.mkOption {
       type = lib.types.str;
       default = "Tandoor Recipes";
@@ -71,28 +57,30 @@ in {
     # Enable PostgreSQL service
     services.postgresql = {
       enable = true;
-      ensureDatabases = [ cfg.database.name ];
+      ensureDatabases = [ "tandoor_recipes" ];
+      authentication = ''
+        local tandoor_recipes tandoor_recipes peer
+      '';
       ensureUsers = [{
-        name = cfg.database.user;
+        name = "tandoor_recipes";
         ensureDBOwnership = true;
       }];
     };
 
     services.tandoor-recipes = {
       enable = true;
-      user = cfg.database.user;
       group = homelab.group;
       address = cfg.address;
       port = cfg.port;
       database.createLocally = false;
       extraConfig = {
         SECRET_KEY_FILE = cfg.secretKeyFile;
-        TIMEZONE = homelab.timeZone;
+        TZ = homelab.timeZone;
         DB_ENGINE = "django.db.backends.postgresql";
-        POSTGRES_HOST = "localhost";
-        POSTGRES_PORT = "5432";
-        POSTGRES_DB = cfg.database.name;
-        POSTGRES_USER = cfg.database.user;
+        POSTGRES_HOST = "/run/postgresql";
+        POSTGRES_DB = "tandoor_recipes";
+        POSTGRES_USER = "tandoor_recipes";
+        ALLOWED_HOSTS = cfg.url;
       };
     };
 
