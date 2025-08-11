@@ -80,7 +80,8 @@ in {
         POSTGRES_DB = "tandoor_recipes";
         POSTGRES_USER = "tandoor_recipes";
         ALLOWED_HOSTS = cfg.url;
-        GUNICORN_MEDIA = 1;
+        MEDIA_ROOT = "/var/lib/tandoor-recipes/media";
+        GUNICORN_MEDIA = 0;
         GUNICORN_THREADS = 1;
         GUNICORN_WORKERS = 1;
         COMMENT_PREF_DEFAULT = 1;
@@ -95,6 +96,19 @@ in {
     services.caddy.virtualHosts."${cfg.url}" = {
       useACMEHost = homelab.baseDomain;
       extraConfig = ''
+        # Serve media files directly
+        handle_path /media/* {
+          root * /var/lib/tandoor-recipes
+          file_server
+          encode gzip
+          
+          @static {
+            path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.woff *.woff2 *.ttf *.eot *.pdf *.zip *.webp
+          }
+          header @static Cache-Control "public, max-age=31536000"
+        }
+        
+        # Proxy everything else to Tandoor
         reverse_proxy http://${cfg.address}:${toString cfg.port}
       '';
     };
