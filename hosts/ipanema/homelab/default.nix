@@ -1,10 +1,10 @@
-{ config, ... }: {
+{ config, lib, ... }: {
 
   homelab = {
     enable = true;
     dnsCredentialsFile = config.age.secrets.dnsApiCredentials.path;
-    baseDomain = "ipanema.martinclaus.dev";
-    machineName = "ipanema";
+    baseDomain = "${config.networking.hostName}.martinclaus.dev";
+    machineName = config.networking.hostName;
     services = {
       enable = true;
       serveAssets = true;
@@ -48,7 +48,7 @@
           {
             greeting = {
               text_size = "4xl";
-              text = "Ipanema Homelab";
+              text = "${lib.toUpper (builtins.substring 0 1 config.networking.hostName)}${builtins.substring 1 (-1) config.networking.hostName} Homelab";
             };
           }
         ];
