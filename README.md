@@ -83,76 +83,51 @@ reboot
 
 ## Raspberry Pi installation
 
-For Raspberry Pi (margarita), the installation process is similar but simpler since disko is not used.
+For Raspberry Pi (margarita), the installation uses the NixOS SD image which comes with NixOS pre-installed.
 
-Create a root password using the TTY
+**Prerequisites:**
+- Flash the [NixOS ARM SD image](https://hydra.nixos.org/job/nixos/trunk-combined/nixos.sd_image.aarch64-linux) to an SD card
+- Boot the Raspberry Pi from the SD card
+- Connect via network (DHCP will assign an IP automatically)
+
+**Initial setup from the Pi console:**
+
+Create a root password
 
 ```bash
 sudo su
 passwd
 ```
 
-From your host, copy the public SSH key to the server
+**From your host machine:**
+
+Copy the public SSH key to the Pi
 
 ```bash
 ssh-add ~/.ssh/<ssh_key>
-ssh-copy-id -i ~/.ssh/<ssh_key> root@<nix_host>
+ssh-copy-id -i ~/.ssh/<ssh_key> root@<pi_ip>
 ```
 
-SSH into the host with agent forwarding enabled (for the secrets repo access)
+**SSH into the Pi with agent forwarding** (for the secrets repo access)
 
 ```bash
-ssh -A root@<nix_host>
+ssh -A root@<pi_ip>
 ```
 
-Enable flakes
+**On the Pi, clone the configuration:**
 
 ```bash
-mkdir -p ~/.config/nix
-echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+git clone https://github.com/martinclaus1/nix-config.git /etc/nixos
+cd /etc/nixos
 ```
 
-Install git
+**Apply the configuration:**
 
 ```bash
-nix-env -f '<nixpkgs>' -iA git
+nixos-rebuild switch --flake /etc/nixos#margarita
 ```
 
-Clone this repository
-
-```bash
-mkdir -p /mnt/etc/nixos
-git clone https://github.com/martinclaus1/nix-config.git /mnt/etc/nixos
-```
-
-Avoid host key warnings:
-
-```bash
-sudo mkdir -p /mnt/etc/secrets/initrd
-sudo ssh-keygen -t rsa -b 4096 -f /mnt/etc/secrets/initrd/ssh_host_rsa_key -N ""
-```
-
-Install the system
-
-```bash
-nixos-install \
---root "/mnt" \
---no-root-passwd \
---flake "git+file:///mnt/etc/nixos#margarita"
-```
-
-Unmount the filesystems
-
-```bash
-umount /mnt/boot
-umount -R /mnt
-```
-
-Reboot
-
-```bash
-reboot
-```
+The system will rebuild and activate the new configuration. After this completes, your Raspberry Pi is configured and ready to use.
 
 ## Snippets
 
