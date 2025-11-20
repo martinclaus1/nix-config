@@ -37,5 +37,16 @@
           inputs.agenix.nixosModules.default
         ];
       };
+
+      nixosConfigurations.margarita = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          disko.nixosModules.disko
+          ./hosts/margarita
+          ./users/lazycat
+          inputs.agenix.nixosModules.default
+        ];
+      };
     };
 }

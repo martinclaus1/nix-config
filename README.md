@@ -81,6 +81,79 @@ Reboot
 reboot
 ```
 
+## Raspberry Pi installation
+
+For Raspberry Pi (margarita), the installation process is similar but simpler since disko is not used.
+
+Create a root password using the TTY
+
+```bash
+sudo su
+passwd
+```
+
+From your host, copy the public SSH key to the server
+
+```bash
+ssh-add ~/.ssh/<ssh_key>
+ssh-copy-id -i ~/.ssh/<ssh_key> root@<nix_host>
+```
+
+SSH into the host with agent forwarding enabled (for the secrets repo access)
+
+```bash
+ssh -A root@<nix_host>
+```
+
+Enable flakes
+
+```bash
+mkdir -p ~/.config/nix
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+```
+
+Install git
+
+```bash
+nix-env -f '<nixpkgs>' -iA git
+```
+
+Clone this repository
+
+```bash
+mkdir -p /mnt/etc/nixos
+git clone https://github.com/martinclaus1/nix-config.git /mnt/etc/nixos
+```
+
+Avoid host key warnings:
+
+```bash
+sudo mkdir -p /mnt/etc/secrets/initrd
+sudo ssh-keygen -t rsa -b 4096 -f /mnt/etc/secrets/initrd/ssh_host_rsa_key -N ""
+```
+
+Install the system
+
+```bash
+nixos-install \
+--root "/mnt" \
+--no-root-passwd \
+--flake "git+file:///mnt/etc/nixos#margarita"
+```
+
+Unmount the filesystems
+
+```bash
+umount /mnt/boot
+umount -R /mnt
+```
+
+Reboot
+
+```bash
+reboot
+```
+
 ## Snippets
 
 Find actual network driver:
