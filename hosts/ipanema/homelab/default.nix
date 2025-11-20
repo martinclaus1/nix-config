@@ -1,4 +1,10 @@
-{ config, lib, ... }: {
+{
+  config,
+  lib,
+  interface,
+  ...
+}:
+{
 
   homelab = {
     enable = true;
@@ -6,6 +12,7 @@
     baseDomain = "${config.networking.hostName}.martinclaus.dev";
     machineName = config.networking.hostName;
     services = {
+      defaultInterface = interface;
       enable = true;
       serveAssets = true;
       adguardhome = {
@@ -43,12 +50,16 @@
         '';
         widgets = [
           {
-            logo = { icon = "${config.homelab.assetsUrl}/icons/granita.png"; };
+            logo = {
+              icon = "${config.homelab.assetsUrl}/icons/granita.png";
+            };
           }
           {
             greeting = {
               text_size = "4xl";
-              text = "${lib.toUpper (builtins.substring 0 1 config.networking.hostName)}${builtins.substring 1 (-1) config.networking.hostName} Homelab";
+              text = "${lib.toUpper (builtins.substring 0 1 config.networking.hostName)}${
+                builtins.substring 1 (-1) config.networking.hostName
+              } Homelab";
             };
           }
         ];

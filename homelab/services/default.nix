@@ -77,5 +77,6 @@
     ./adguardhome-sync
     ./calibre-web
     ./tandoor
+    ./loki
   ];
 }

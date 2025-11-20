@@ -55,6 +55,11 @@
           }
         ];
       };
+
+      loki = {
+        enable = true;
+        url = "loki.${config.homelab.baseDomain}";
+      };
     };
   };
 }

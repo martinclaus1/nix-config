@@ -3,6 +3,9 @@ let
   interface = "eth0";
 in
 {
+
+  _module.args = { inherit interface; };
+
   imports = [
     ./disko.nix
     ../common
