@@ -1,7 +1,13 @@
 { pkgs, ... }:
+let
+  interface = "end0";
+in
 {
+  _module.args = { inherit interface; };
+
   imports = [
     ../common
+    ./homelab
   ];
 
   # SSH configuration
@@ -18,6 +24,18 @@
     hostName = "margarita";
     wireless.enable = false;
     useDHCP = true;
+    firewall = {
+      enable = true;
+      checkReversePath = false;
+      interfaces = {
+        "${interface}" = {
+          allowedTCPPorts = [
+            22
+          ];
+        };
+      };
+      extraCommands = '''';
+    };
   };
 
   system.stateVersion = "25.05";

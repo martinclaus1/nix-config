@@ -44,6 +44,7 @@
         modules = [
           disko.nixosModules.disko
           ./hosts/margarita
+          ./homelab
           ./users/lazycat
           inputs.agenix.nixosModules.default
         ];

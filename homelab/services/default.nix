@@ -15,7 +15,6 @@
     };
     defaultInterface = lib.mkOption {
       type = lib.types.str;
-      default = "eth0";
       description = "Default network interface for the homelab services";
     };
   };
