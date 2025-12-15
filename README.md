@@ -86,6 +86,7 @@ reboot
 For Raspberry Pi (margarita), the installation uses the NixOS SD image which comes with NixOS pre-installed.
 
 **Prerequisites:**
+
 - Flash the [NixOS ARM SD image](https://hydra.nixos.org/job/nixos/trunk-combined/nixos.sd_image.aarch64-linux) to an SD card
 - Boot the Raspberry Pi from the SD card
 - Connect via network (DHCP will assign an IP automatically)
@@ -131,19 +132,19 @@ The system will rebuild and activate the new configuration. After this completes
 
 ## Snippets
 
-Find actual network driver:
+### Find actual network driver:
 
 ```bash
 lspci -v | grep -i ethernet -A 5
 ```
 
-Debug acme challenge:
+### Debug acme challenge:
 
 ```bash
 journalctl -u 'acme-*'
 ```
 
-Check network related boot logs:
+### Check network related boot logs:
 
 ```bash
 sudo journalctl -b | grep -E "(network|ssh|initrd)"
@@ -151,30 +152,38 @@ sudo journalctl -b | grep -E "(network|ssh|initrd)"
 
 Access console at boot with Crtl + Alt + F2
 
-Check network status
+### Check network status
 
 ```bash
 ip addr show
 ```
 
-Print multiple files
+### Print multiple files
 
 ```bash
 tail -n +1 /path/to/files/*.txt
 ```
 
-Keep the last 5 generations of the system
+### Keep the last 5 generations of the system
 
 ```bash
 sudo nix-env --delete-generations +5 --profile /nix/var/nix/profiles/system
 ```
 
-Check podman logs
+### Check podman logs
 
 ```bash
 journalctl -fu podman-adguardhome-sync.service --since yesterday
 ```
 
+### Free up disk space
+
+```bash
+sudo nix-collect-garbage -d
+```
+
 ## startup
 
+```bash
 systemctl start cryptsetup.target
+```
