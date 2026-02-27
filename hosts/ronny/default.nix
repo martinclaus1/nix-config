@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ./disko.nix
@@ -6,6 +6,7 @@
   ];
 
   boot.loader.grub.enable = true;
+  boot.loader.grub.devices = lib.mkForce [ "/dev/sda" ];
 
   networking = {
     hostName = "ronny";
