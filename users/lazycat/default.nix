@@ -12,6 +12,7 @@ in
 
   boot.initrd.network.ssh.authorizedKeys = sshKeys;
 
+  security.sudo.wheelNeedsPassword = false;
   users.users = {
     lazycat = {
       shell = pkgs.zsh;
