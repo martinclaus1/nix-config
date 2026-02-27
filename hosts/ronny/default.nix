@@ -5,6 +5,8 @@
     ../common
   ];
 
+  boot.initrd.availableKernelModules = [ "virtio_pci" "virtio_blk" "ahci" "sd_mod" ];
+
   boot.loader.grub.enable = true;
   boot.loader.grub.devices = lib.mkForce [ "/dev/sda" ];
 
