@@ -29,6 +29,11 @@
     };
   };
 
+  programs.ssh.extraConfig = ''
+    Host github.com
+      IdentityFile /etc/ssh/ssh_host_ed25519_key
+  '';
+
   # Forgejo git forge
   services.forgejo = {
     enable = true;
@@ -85,7 +90,8 @@
         settings = {
           enabled = true;
           filter = "forgejo";
-          logpath = "/var/lib/forgejo/log/forgejo.log";
+          backend = "systemd";
+          journalmatch = "_SYSTEMD_UNIT=forgejo.service";
           maxretry = 5;
           bantime = 3600;
         };
@@ -95,9 +101,15 @@
 
   environment.etc."fail2ban/filter.d/forgejo.conf".text = ''
     [Definition]
-    failregex = .*\s<HOST>\s.*\s(Failed authentication|Invalid credentials|invalid credentials)
+    failregex = Failed authentication attempt for .* from <HOST>:\d+:
     ignoreregex =
   '';
+
+  systemd.services.fail2ban = {
+    restartTriggers = [
+      config.environment.etc."fail2ban/filter.d/forgejo.conf".source
+    ];
+  };
 
   # Fix ownership of the agenix identity key placed by nixos-anywhere (root-owned)
   systemd.tmpfiles.rules = [
