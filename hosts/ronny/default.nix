@@ -3,6 +3,7 @@
   imports = [
     ./disko.nix
     ../common
+    ./secrets
     ./ssh.nix
     ./forgejo.nix
   ];
@@ -17,7 +18,7 @@
     useDHCP = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 22 80 443 ];
+      allowedTCPPorts = [ 80 443 2222 31337 ];
     };
   };
 
