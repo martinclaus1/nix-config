@@ -44,7 +44,7 @@ in
   config = lib.mkIf cfg.enable {
     services.${service} = {
       enable = true;
-      environmentFile = builtins.toFile "homepage.env" "HOMEPAGE_ALLOWED_HOSTS=${homelab.baseDomain}";
+      environmentFiles = [ (builtins.toFile "homepage.env" "HOMEPAGE_ALLOWED_HOSTS=${homelab.baseDomain}") ];
       settings = {
         title = "${machineName} Homelab";
         target = "_self";

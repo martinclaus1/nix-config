@@ -64,10 +64,7 @@
           }
         ];
       };
-      calibre-web = {
-        enable = true;
-        libraryDir = "/home/share/books";
-      };
+      calibre-web.enable = true;
       tandoor = {
         enable = true;
         secretKeyFile = config.age.secrets.tandoorSecretKey.path;

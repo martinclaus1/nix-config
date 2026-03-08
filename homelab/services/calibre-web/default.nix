@@ -15,6 +15,7 @@ in
 
     libraryDir = lib.mkOption {
       type = lib.types.str;
+      default = "/var/lib/${service}/library";
       description = "Directory where the Calibre library is stored";
     };
 
@@ -47,8 +48,6 @@ in
   config = lib.mkIf cfg.enable {
     services.${service} = {
       enable = true;
-      user = homelab.user;
-      group = homelab.group;
       dataDir = cfg.configDir;
       listen = {
         ip = "127.0.0.1";

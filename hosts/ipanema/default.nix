@@ -126,6 +126,8 @@ in
     dig
   ];
 
+  environment.enableAllTerminfo = true;
+
   # SSH configuration
   services.openssh = {
     enable = true;
@@ -164,9 +166,12 @@ in
 
   services.resolved = {
     enable = true;
-    extraConfig = ''
-      DNSStubListener=no
-    '';
+    settings.Resolve.DNSStubListener = "no";
   };
+
+  # fileSystems."/var/lib/calibre-library" = {
+  #   device = "/home/share/books";
+  #   options = [ "bind" ];
+  # };
 
 }

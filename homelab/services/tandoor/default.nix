@@ -69,7 +69,6 @@ in {
 
     services.tandoor-recipes = {
       enable = true;
-      group = homelab.group;
       address = cfg.address;
       port = cfg.port;
       database.createLocally = false;

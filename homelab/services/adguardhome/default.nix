@@ -60,8 +60,9 @@ in
       preStart = ''
         if [ -f "$CREDENTIALS_DIRECTORY/password" ]; then
           password_hash=$(cat "$CREDENTIALS_DIRECTORY/password")
-          sed -i "s/placeholder/$password_hash/g" \
-            /var/lib/AdGuardHome/AdGuardHome.yaml
+          content=$(< "$STATE_DIRECTORY/AdGuardHome.yaml")
+          printf '%s\n' "''${content//placeholder/$password_hash}" > "$STATE_DIRECTORY/AdGuardHome.yaml.tmp"
+          mv "$STATE_DIRECTORY/AdGuardHome.yaml.tmp" "$STATE_DIRECTORY/AdGuardHome.yaml"
         fi
       '';
     };

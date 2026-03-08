@@ -185,5 +185,8 @@ sudo nix-collect-garbage -d
 ## startup
 
 ```bash
+systemd-tty-ask-password-agent --query
+
+# or
 systemctl start cryptsetup.target
 ```
