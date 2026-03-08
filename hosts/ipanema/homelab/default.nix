@@ -17,7 +17,7 @@
       serveAssets = true;
       adguardhome = {
         enable = true;
-        dnsBindHost = "10.55.66.22";
+        dnsBindHost = "10.55.66.21";
         hashedPassword = config.age.secrets.adguardHomePassword.path;
       };
       adguardhome-sync = {

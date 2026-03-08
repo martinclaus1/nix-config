@@ -65,10 +65,8 @@ in
           allowedTCPPorts = [
             22
             2222
+            53
           ];
-        };
-        "adguard0" = {
-          allowedTCPPorts = [ 53 ];
           allowedUDPPorts = [ 53 ];
         };
       };
@@ -81,39 +79,16 @@ in
     enable = true;
     wait-online.enable = true;
 
-    netdevs = {
-      "00-adguard-macvlan" = {
-        netdevConfig = {
-          Kind = "macvlan";
-          Name = "adguard0";
-        };
-        macvlanConfig = {
-          Mode = "bridge";
-        };
-      };
-    };
-
     networks = {
       "${interface}" = {
         matchConfig.Name = "${interface}";
         networkConfig = {
           Address = "10.55.66.21/24";
           Gateway = "10.55.66.1";
-          MACVLAN = "adguard0";
           DNS = [ "10.55.66.1" ];
         };
         linkConfig = {
           RequiredForOnline = "yes";
-        };
-      };
-
-      "00-adguard0" = {
-        matchConfig.Name = "adguard0";
-        networkConfig = {
-          Address = "10.55.66.22/24";
-        };
-        linkConfig = {
-          RequiredForOnline = "no";
         };
       };
     };
