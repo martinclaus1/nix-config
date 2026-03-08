@@ -168,10 +168,4 @@ in
     enable = true;
     settings.Resolve.DNSStubListener = "no";
   };
-
-  # fileSystems."/var/lib/calibre-library" = {
-  #   device = "/home/share/books";
-  #   options = [ "bind" ];
-  # };
-
 }
